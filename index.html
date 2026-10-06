@@ -13,14 +13,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&display=swap" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fontsource/clear-sans@5/400.css" rel="stylesheet">
 <link href="https://cdn.jsdelivr.net/npm/@fontsource/clear-sans@5/500.css" rel="stylesheet">
-<link href="styles.css?v=3" rel="stylesheet">
+<link href="styles.css?v=4" rel="stylesheet">
 <style>
   .hero { position: relative; height: calc(100svh - var(--header-h) - var(--footer-h)); min-height: 300px; overflow: hidden; background: #041a1b url(assets/hero-city-poster.jpg) center / cover no-repeat; }
   .hero video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4,26,27,.15) 0%, rgba(4,26,27,0) 35%, rgba(4,26,27,.7) 100%), linear-gradient(90deg, rgba(4,26,27,.55) 0%, rgba(4,26,27,.15) 50%, rgba(4,26,27,0) 75%); pointer-events: none; }
   .hero-copy { position: absolute; z-index: 2; left: 0; right: 0; bottom: clamp(40px, 9vh, 96px); }
   .hero-copy h1 { color: var(--cream); font-size: clamp(32px, 4.4vw, 88px); max-width: 22ch; text-wrap: balance; text-shadow: 0 1px 24px rgba(0,0,0,.25); }
-  .hero-copy .btn { margin-top: 32px; }
+  .hero-copy .btn { margin-top: 28px; }
   @media (max-height: 520px) {
     .hero { min-height: 0; }
     .hero-copy { bottom: 24px; }
@@ -45,7 +45,7 @@
     <div class="hero-copy">
       <div class="wrap">
         <h1>Solutions architected to protect your peace of mind.</h1>
-        <a class="btn btn-light" href="/consultation">Request a Consultation</a>
+        <a class="btn btn-ghost" href="/consultation">Request a Consultation</a>
       </div>
     </div>
   </section>
