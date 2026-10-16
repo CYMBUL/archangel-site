@@ -1,0 +1,52 @@
+name: AI code review
+
+# Claude reads each pull request into main and posts a plain-English review
+# for the admin. It comments only; it cannot merge, approve or deploy.
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+  id-token: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: anthropics/claude-code-action@v1
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PULL REQUEST: #${{ github.event.pull_request.number }}
+
+            You are the independent code reviewer for Galeta / CYMBUL. The person
+            approving this pull request is a NON-TECHNICAL admin. Review the full
+            diff of this pull request against main and post ONE pull request
+            comment in plain English (no jargon; explain any technical term),
+            using exactly these sections:
+
+            **What this change does** — 2–4 bullets a business owner understands.
+            **Risks found** — security (leaked keys/passwords, data exposed,
+            missing access checks), data (deleting or changing records, database
+            changes), money (payment, billing, AI-cost loops), breakage (pages,
+            forms, logins, emails), and anything touching domains/DNS. For each:
+            what, where (file), how serious (High/Medium/Low), and the fix.
+            Write "None found" if clean.
+            **Things the admin should click-test in the preview** — 2–5 specific
+            checks.
+            **Recommendation** — one of: ✅ Safe to merge / ⚠️ Merge after fixes /
+            ⛔ Do not merge — with one sentence why.
+
+            Be accurate; never claim you ran or tested something you did not.
+            Use `gh pr comment` to post the review.
+          claude_args: |
+            --allowedTools "Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*),Read,Grep,Glob"
